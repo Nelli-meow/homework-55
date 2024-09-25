@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import './App.css'
+import Ingredients from "./components/Ingredients/Ingredients.tsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
+const App = () => (
     <>
-
+      <Ingredients />
     </>
-  )
-}
+);
 
 export default App
