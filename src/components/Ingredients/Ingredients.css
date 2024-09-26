@@ -1,0 +1,14 @@
+.ingredients-block {
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredient-image {
+    width: 15%;
+}
