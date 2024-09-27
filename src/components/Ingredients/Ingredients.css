@@ -5,10 +5,32 @@
     padding: 20px;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
 }
 
 .ingredient-image {
-    width: 15%;
+    width: 70%;
+}
+
+.ingredients-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+}
+
+.ingredients-price  {
+    font-size: 20px;
+    margin: 0;
+}
+
+.ingredients-title {
+    font-size: 25px;
+}
+
+.ingredients-count {
+    font-size: 40px;
 }
