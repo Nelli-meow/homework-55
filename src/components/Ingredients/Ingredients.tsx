@@ -4,10 +4,10 @@ import meatImage from '../../assets/meat.png';
 import saladImage from '../../assets/salad.png';
 import cheeseImage from '../../assets/cheese.png';
 import baconImage from '../../assets/bacon.png';
-import {useState} from "react";
 import DeleteButtons from "../DeleteButtons/DeleteButtons.tsx";
 
 type Ingredient = {
+    count: number;
     name: string;
     price: number;
     image: string;
@@ -18,37 +18,35 @@ const INGREDIENTS: Ingredient[] = [
     {name: 'Cheese', price: 50, image: cheeseImage},
     {name: 'Salad', price: 10, image: saladImage},
     {name: 'Bacon', price: 60, image: baconImage},
-
 ];
 
-const Ingredients: React.FC = () => {
-    const  [burgerIngredients, setBurgerIngredients] = useState<{name: string; count: number}[]>([
-        { name: 'Meat', count: 0 },
-        { name: 'Cheese', count: 0 },
-        { name: 'Salad', count: 0 },
-        { name: 'Bacon', count: 0 },
-    ]);
-    const [cost, setCost] = useState(0);
+interface IngredientsProps {
+    burgerIngredients: Ingredient[];
+    setBurgerIngredients: Ingredient[];
+}
 
+
+const Ingredients: React.FC<IngredientsProps> = ({burgerIngredients, setBurgerIngredients}) => {
     const addIngredient = (ingredientIndex: number) => {
         setBurgerIngredients(prevIngredients =>
-            prevIngredients.map((ing, index) =>
-                index === ingredientIndex ? { ...ing, count: ing.count + 1 } : ing
-            )
+            prevIngredients.map((ing, index) => {
+                if (index === ingredientIndex) {
+                    return {...ing, count: ing.count + 1};
+                }
+                return ing;
+            })
         );
-        setCost(prevCost => prevCost + INGREDIENTS[ingredientIndex].price);
     };
 
     const deleteIngredient = (ingredientIndex: number) => {
         setBurgerIngredients(prevIngredients =>
-            prevIngredients.map((ing, index) =>
-                index === ingredientIndex && ing.count > 0 ? { ...ing, count: ing.count - 1 } : ing
-            )
+            prevIngredients.map((ing, index) => {
+                if (index === ingredientIndex && ing.count > 0) {
+                    return {...ing, count: ing.count - 1};
+                }
+                return ing;
+            })
         );
-        setCost(prevCost => {
-            const ingredientPrice = INGREDIENTS[ingredientIndex].price;
-            return prevCost - ingredientPrice >= 0 ? prevCost - ingredientPrice : 0;
-        });
     };
 
     return (
@@ -69,9 +67,7 @@ const Ingredients: React.FC = () => {
                         <h3 className="ingredients-title">{ingredient.name}</h3>
                     </button>
                     <p className="ingredients-price">Price: {ingredient.price}</p>
-                    <span className="ingredients-count">
-                        × {burgerIngredients[index].count}
-                    </span>
+                    <span className="ingredients-count">× {burgerIngredients[index].count}</span>
                     <DeleteButtons onClick={() => deleteIngredient(index)}/>
                 </div>
             ))}
